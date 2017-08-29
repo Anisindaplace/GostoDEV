@@ -1,0 +1,40 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    "arrow-body-style": 0,
+    "consistent-return": 0,
+    "default-case": 0,
+    "id-length": 0,
+    "import/no-unresolved": [2, { "ignore": ["config"] }],
+    "max-len": 0,
+    "new-cap": [2, { "capIsNew": false }],   //Allow uppercase-started functions to be called without new operator (for ImmutableJS, etc)
+    "newline-per-chained-call": 0,
+    "no-confusing-arrow": 0,
+    "no-nested-ternary": 0,
+    "no-param-reassign": 0,
+    "no-restricted-globals": [2, "find"],
+    "no-underscore-dangle": 0,
+    "no-unused-vars": [2, {"args": "none"}],
+    "no-use-before-define": [2, "nofunc"],
+    "react/jsx-no-bind": 0,
+    "react/no-multi-comp": 0,
+    "react/no-did-mount-set-state": 0,
+    "react/prop-types": 1,
+    "react/sort-comp": [2, {
+      "order": [
+        "lifecycle",
+        "everything-else",
+        "render",
+        "/^_?render.+$/"
+      ]
+    }],
+    "react/prefer-es6-class": 0,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-no-duplicate-props": 2,
+    "react/no-did-update-set-state": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "prefer-rest-params": 0,
+    "prefer-template": 0
+  }
+}
