@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Menu, Button } from 'antd';
-import './Layout.scss';
+import './Layout.css';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 export const AppLayout = (props) => {
   return (
     <Layout className="layout">
-      <Header>
+      <Header className="bg-white">
         <div className="logo" />
         <Menu
-          theme="dark"
+          theme="white"
           mode="horizontal"
           defaultSelectedKeys={['1']}
           style={{ lineHeight: '64px', float: 'right' }}
@@ -24,18 +24,15 @@ export const AppLayout = (props) => {
           </Menu.Item>
         </Menu>
       </Header>
-      <Content className="container" style={{ padding: '0 50px' }}>
+      <Content>
         {props.children}
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
-        El Gosto ©2017
-      </Footer>
     </Layout>
   );
 };
 
 AppLayout.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.oneOf([PropTypes.array, PropTypes.object]).isRequired,
 };
 
 export default AppLayout;

@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { DatePicker } from 'antd';
+import { Route } from 'react-router-dom';
+
+// Pages
+import ConcertsPages from './pages/Concerts';
 
 import Layout from './Layout';
-import './App.scss';
+import './App.css';
+import './common.css';
 
 class App extends Component {
   render() {
     return (
       <Layout>
-        <DatePicker />
+        <Route path="/" component={ConcertsPages} />
       </Layout>
     );
   }
