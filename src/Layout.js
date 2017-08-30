@@ -18,7 +18,8 @@ export const AppLayout = (props) => {
         >
           <Menu.Item key="1">Home</Menu.Item>
           <Menu.Item key="2">Performers</Menu.Item>
-          <Menu.Item key="3">
+          <Menu.Item key="3">Concerts</Menu.Item>
+          <Menu.Item key="4">
             <Button type="primary">Sign up</Button>
             <Button type="secondary">Sign in</Button>
           </Menu.Item>
