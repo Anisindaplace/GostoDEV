@@ -1,0 +1,113 @@
+@import "~styles/_base";
+
+$width: 256px;
+$height: 256px;
+
+div.filepicker {
+  padding: 2rem;
+  background: #c8dadf;
+  outline: 2px dashed #92b0b3;
+  outline-offset: -10px;
+  border: none;
+  border-radius: 0;
+  text-align: left;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background: #b3ccd4;
+  }
+
+  .dropZoneMessage {
+    padding: 3rem 0;
+    text-align: center;
+
+    .dropZoneMessage-icon {
+      margin-bottom: 15px;
+    }
+  }
+
+  .dz-preview {
+    width: $width;
+
+    &.dz-image-preview {
+      background: transparent;
+
+      .dz-details {
+        position: relative;
+        padding: 0;
+        opacity: 1;
+
+        .dz-image {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: $width;
+          height: $height;
+          padding: 5px;
+          border: 1px solid #92b0b3;
+          border-radius: 0;
+          overflow: hidden;
+          background: #fff;
+          margin-bottom: 5px;
+
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: 0.2s all;
+          }
+        }
+
+        .dz-filename,
+        .dz-size {
+          color: #fff;
+
+          & span {
+            background-color: #207CE1;
+            padding: 2px;
+            border-radius: 5px;
+
+            &:hover {
+              border: none;
+              background: #207CE1;
+            }
+          }
+        }
+      }
+
+      .dz-success-mark {
+        color: $logo-green;
+      }
+
+      .dz-error-mark {
+        color: $logo-red;
+      }
+
+      > .btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 9999;
+        pointer-events: all;
+        cursor: pointer;
+      }
+    }
+
+
+    .dz-error-message {
+      top: -90px;
+
+      &:after {
+        bottom: -6px;
+        border-bottom: none;
+        border-top: 6px solid #be2626;
+      }
+    }
+
+    &:hover {
+      .dz-image img {
+        filter: none;
+      }
+    }
+  }
+}

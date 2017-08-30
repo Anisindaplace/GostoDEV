@@ -24,3 +24,9 @@
 .bg-white {
   background: #fff;
 }
+
+.hidden {
+  display: none !important;
+  opacity: 0;
+  visibility: hidden;
+}

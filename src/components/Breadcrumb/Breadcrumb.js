@@ -5,7 +5,7 @@ import './breadcrumb.css';
 
 const Breadcrumb = ({ pageTitle, imageSrc }) => {
   return (
-    <div className="breadcrumb" style={{ backgroundImage: `url(${imageSrc})` }}>
+    <div className="breadcrumb bg-image" style={{ backgroundImage: `url(${imageSrc})` }}>
       <div className="overlay" />
       <div className="page-title">
         <h1>{pageTitle}</h1>

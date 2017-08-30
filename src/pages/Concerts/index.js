@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
 
-import bg from './bg.jpg';
+import bg from '../bg.jpg';
 import concert1 from './concert1.jpg';
 import concert2 from './concert2.jpg';
 import concert3 from './concert3.jpg';
