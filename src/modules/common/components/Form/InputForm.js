@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Input, InputNumber } from 'antd';
 import './InputForm.scss';
 
@@ -10,6 +11,13 @@ class InputForm extends Component {
     type: PropTypes.string,
     placeholder: PropTypes.string,
     className: PropTypes.string,
+  };
+
+  static defaultProps = {
+    label: '',
+    type: '',
+    placeholder: '',
+    className: '',
   };
 
   constructor(props) {

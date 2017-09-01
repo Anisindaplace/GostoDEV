@@ -6,7 +6,7 @@ import concert1 from './common/assets/concert1.jpg';
 import concert2 from './common/assets/concert2.jpg';
 import concert3 from './common/assets/concert3.jpg';
 import concert4 from './common/assets/concert4.jpg';
-import Breacrumb from '../../components/Breadcrumb/Breadcrumb';
+import Breacrumb from '../common/components/Breadcrumb/Breadcrumb';
 import ConcertItem from './common/components/ConcertItem';
 
 class ConcertsPages extends Component {

@@ -37,5 +37,10 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "prefer-rest-params": 0,
     "prefer-template": 0
+  },
+  "env": {
+    "browser": true,
+    "jasmine": true,
+    "jest": true
   }
 }

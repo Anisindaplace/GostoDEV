@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-} from 'react-router-dom';
-
-import App from './modules/Application/App';
+import Root from './Root';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById('root'),
-);
+const render = (Component) => {
+  ReactDOM.render(<Component />, document.getElementById('root'));
+};
+
+render(Root);
+
+if (module.hot) {
+  module.hot.accept('./Root', () => {
+    render(Root);
+  });
+}
+
 registerServiceWorker();
