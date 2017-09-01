@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
 
-import bg from '../bg.jpg';
-import concert1 from './concert1.jpg';
-import concert2 from './concert2.jpg';
-import concert3 from './concert3.jpg';
-import concert4 from './concert4.jpg';
+import bg from '../common/assets/bg.jpg';
+import concert1 from './common/assets/concert1.jpg';
+import concert2 from './common/assets/concert2.jpg';
+import concert3 from './common/assets/concert3.jpg';
+import concert4 from './common/assets/concert4.jpg';
 import Breacrumb from '../../components/Breadcrumb/Breadcrumb';
-import ConcertItem from './components/ConcertItem';
+import ConcertItem from './common/components/ConcertItem';
 
 class ConcertsPages extends Component {
   render() {

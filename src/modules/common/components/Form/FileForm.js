@@ -5,7 +5,7 @@ import { Upload, Icon, message, Modal } from 'antd';
 // import { HOST, UPLOAD_PATH } from 'config/config';
 // import { previewTemplate, dictDefaultMessage } from './DropZoneTemplate';
 
-import './FileForm.scss';
+import './FileForm.css';
 
 function DropZonePreview() {
   return (

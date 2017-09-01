@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Alert, Button } from 'antd';
-import FormInputs from '../../../components/Form';
 
+import FormInputs from '../../../../common/components/Form';
 import './style.css';
 
 class SigninForm extends Component {

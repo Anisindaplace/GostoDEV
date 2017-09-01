@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Pages
-import ConcertsPage from './pages/Concerts';
-import SigninPage from './pages/Signin';
+import ConcertsPage from '../Concert';
+import SigninPage from '../User/pages/Signin';
 
-import Layout from './Layout';
+import Layout from './common/components/Layout';
 import './App.css';
 import './common.css';
 

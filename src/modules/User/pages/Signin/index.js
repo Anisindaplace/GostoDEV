@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Breacrumb from '../../components/Breadcrumb/Breadcrumb';
+import Breacrumb from '../../../common/components/Breadcrumb/Breadcrumb';
 import SigninForm from './components/SigninForm';
-import bg from '../bg.jpg';
+import bg from '../../../common/assets/bg.jpg';
 
 export default class SigninPage extends Component {
   render() {
