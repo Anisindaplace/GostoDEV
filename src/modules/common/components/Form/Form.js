@@ -16,10 +16,6 @@ export default class FormHOC extends Component {
   }
 
   static defaultProps = {
-    className: '',
-  };
-
-  static defaultProps = {
     layout: 'horizontal',
   };
 

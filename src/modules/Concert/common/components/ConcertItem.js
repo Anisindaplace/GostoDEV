@@ -1,5 +1,5 @@
 import React from 'react';
-import './ConcertItem.css';
+import './ConcertItem.scss';
 
 export const ConcertIntem = ({ title, subtitle, imageSrc }) => {
   return (

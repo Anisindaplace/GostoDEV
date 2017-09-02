@@ -1,24 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Alert, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 import FormInputs from '../../../../common/components/Form';
-import './style.css';
+import './style.scss';
 
 class SigninForm extends Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
+    signin: PropTypes.func.isRequired,
+    logging: PropTypes.bool.isRequired,
   }
 
   handleSubmit = (e) => {
+    const { form, signin } = this.props;
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
+    form.validateFields((error, values) => {
+      if (!error) {
+        return signin(values).then(({ payload }) => {
+          if (payload.success) {
+            form.resetFields();
+          } else {
+            form.setFields({
+              formValidation: {
+                errors: [payload.errors[0]],
+              },
+            });
+          }
+        });
       }
     });
   }
   render() {
+    const { logging } = this.props;
     const { getFieldDecorator, getFieldError } = this.props.form;
     const error = getFieldError('formValidation');
 
@@ -59,8 +74,13 @@ class SigninForm extends Component {
           />
         }
         <div>
-          <a className="login-form-forgot" href="">Forgot password</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Link className="login-form-forgot" to="/forget-password">Forgot password</Link>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            loading={logging}
+          >
             Log in
           </Button>
           Or <a href="">register now!</a>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './breadcrumb.css';
+import './breadcrumb.scss';
 
 const Breadcrumb = ({ pageTitle, imageSrc }) => {
   return (
