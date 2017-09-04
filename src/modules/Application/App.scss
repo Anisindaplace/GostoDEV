@@ -1,3 +1,11 @@
+body, #root, .App, .App .layout {
+  height: 100%;
+}
+
+.layout > .ant-layout-content {
+  flex: 1;
+}
+
 .ant-btn + .ant-btn {
   margin-left: 8px;
 }
@@ -9,4 +17,16 @@
   line-height: 40px;
   color: #272a2e;
   margin-bottom: 40px;
+}
+
+.image-upload-container {
+  position: relative;
+  border-radius: 4px;
+  width: 100%;
+  padding: 50%;
+  background-color: #fff;
+  border: solid .5px #c0c0c0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }

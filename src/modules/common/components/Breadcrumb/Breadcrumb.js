@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import bg from '../../../common/assets/bg.jpg';
 import './breadcrumb.scss';
 
 const Breadcrumb = ({ pageTitle, imageSrc }) => {
@@ -12,6 +13,10 @@ const Breadcrumb = ({ pageTitle, imageSrc }) => {
       </div>
     </div>
   );
+};
+
+Breadcrumb.defaultProps = {
+  imageSrc: bg,
 };
 
 Breadcrumb.propTypes = {

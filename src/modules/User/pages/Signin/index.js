@@ -6,7 +6,6 @@ import { signin } from '../../redux/authReducer';
 
 import Breacrumb from '../../../common/components/Breadcrumb/Breadcrumb';
 import SigninForm from './components/SigninForm';
-import bg from '../../../common/assets/bg.jpg';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -25,7 +24,7 @@ class SigninPage extends Component {
     const { loading: logging } = this.props;
     return (
       <div className="Signin">
-        <Breacrumb pageTitle="Sign in" imageSrc={bg} />
+        <Breacrumb pageTitle="Sign in" />
         <div className="section before-after">
           <div className="container">
             <SigninForm
