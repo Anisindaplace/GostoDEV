@@ -14,6 +14,21 @@
   }
 }
 
+.Form__horizontal {
+  .ant-form-item {
+    display: flex;
+    flex-direction: row;
+
+    .ant-form-item-label {
+      min-width: 200px;
+    }
+
+    .ant-form-item-control-wrapper {
+      flex: 1;
+    }
+  }
+}
+
 .ant-input-number {
   width: 100%;
 }

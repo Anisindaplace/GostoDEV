@@ -46,18 +46,18 @@ class SigninForm extends Component {
         className="login-form clearfix"
       >
         <FormInputs.FormItem
-          label="Username"
+          label="Nom d'utilisateur"
           name="username"
-          placeholder="Username"
+          placeholder="Nom d'utilisateur ou adresse mail"
           prefix={<Icon type="user" style={{ fontSize: 13 }} />}
           component={FormInputs.InputForm}
           decorator={getFieldDecorator}
           validationRules={[{ required: true, message: 'Please input your username.' }]}
         />
         <FormInputs.FormItem
-          label="Password"
+          label="Mot de passe"
           name="password"
-          placeholder="Password"
+          placeholder="Mot de passe"
           prefix={<Icon type="lock" style={{ fontSize: 13 }} />}
           component={FormInputs.InputForm}
           type="password"
@@ -74,7 +74,7 @@ class SigninForm extends Component {
           />
         }
         <div>
-          <Link className="login-form-forgot" to="/forget-password">Forgot password</Link>
+          <Link className="login-form-forgot" to="/forget-password">Mot de passe oublié ?</Link>
           <Button
             type="primary"
             htmlType="submit"
@@ -83,7 +83,7 @@ class SigninForm extends Component {
           >
             Log in
           </Button>
-          Or <a href="">register now!</a>
+          Ou <Link to="/signup">Inscrivez-vous dès maintenant</Link>
         </div>
       </FormInputs.Form>
     );

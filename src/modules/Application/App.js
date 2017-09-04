@@ -8,6 +8,7 @@ import { signout } from '../User/redux/authReducer';
 // Pages
 import ConcertsPage from '../Concert';
 import SigninPage from '../User/pages/Signin';
+import SignupPage from '../User/pages/Signup';
 import Plateform from '../Plateform';
 
 import FetchUser from '../User/common/HOC/FetchUser';
@@ -61,6 +62,14 @@ class App extends Component {
         <PublicRoute
           path="/signin"
           component={SigninPage}
+          authUser={authUser}
+          loading={loading}
+          loaded={loaded}
+          isAuthenticated={isAuthenticated}
+        />
+        <PublicRoute
+          path="/signup"
+          component={SignupPage}
           authUser={authUser}
           loading={loading}
           loaded={loaded}

@@ -8,20 +8,28 @@ import Breacrumb from '../../../common/components/Breadcrumb/Breadcrumb';
 import SigninForm from './components/SigninForm';
 import bg from '../../../common/assets/bg.jpg';
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    signin: data => dispatch(signin(data)),
+  };
+};
+
+@connect(null, mapDispatchToProps)
 class SigninPage extends Component {
   static propTypes = {
     signin: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
   }
 
   render() {
-    const { auth } = this.props;
+    const { loading: logging } = this.props;
     return (
       <div className="Signin">
-        <Breacrumb pageTitle="Signin" imageSrc={bg} />
+        <Breacrumb pageTitle="Sign in" imageSrc={bg} />
         <div className="section before-after">
           <div className="container">
             <SigninForm
-              logging={auth.getIn(['_metadata', 'logging'])}
+              logging={logging}
               signin={this.props.signin}
             />
           </div>
@@ -31,17 +39,5 @@ class SigninPage extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    auth: state.auth,
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    signin: data => dispatch(signin(data)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SigninPage);
+export default SigninPage;
 
