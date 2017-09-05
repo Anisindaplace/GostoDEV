@@ -6,24 +6,6 @@ import Breacrumb from '../common/components/Breadcrumb/Breadcrumb';
 import EditableCell from '../common/components/Table/EditableCell';
 import './style.scss';
 
-const dataSource = [{
-  key: '1',
-  info: 'About Me: ',
-  description: 'Hi, I’m James, I’m 36 and I work as a Digital Designer for the “Daydreams” Agency in Pier 56',
-}, {
-  key: '2',
-  info: 'Birthday: ',
-  description: 'December 14th, 1980',
-}, {
-  key: '3',
-  info: 'Birthplace: ',
-  description: 'Austin, Texas, USA',
-}, {
-  key: '4',
-  info: 'Lives in: ',
-  description: 'San Francisco, California, USA',
-}];
-
 class Plateform extends Component {
   static propTypes = {
     authUser: PropTypes.object.isRequired,
@@ -51,6 +33,31 @@ class Plateform extends Component {
     }];
   }
 
+  getDataSource() {
+    const { authUser } = this.props;
+    return [{
+      key: '0',
+      info: 'Full Name: ',
+      description: authUser.get('displayName'),
+    }, {
+      key: '1',
+      info: 'About Me: ',
+      description: 'Hi, I’m James, I’m 36 and I work as a Digital Designer for the “Daydreams” Agency in Pier 56',
+    }, {
+      key: '2',
+      info: 'Birthday: ',
+      description: 'December 14th, 1980',
+    }, {
+      key: '3',
+      info: 'Email: ',
+      description: authUser.get('email'),
+    }, {
+      key: '4',
+      info: 'User type: ',
+      description: authUser.get('isAdmin') ? "You're admin!" : authUser.get('type'),
+    }];
+  }
+
   render() {
     const { authUser } = this.props;
     return (
@@ -67,11 +74,25 @@ class Plateform extends Component {
                       style={{ backgroundImage: `url(${authUser.get('profileImageURL')})` }}
                     />
                   </div>
-                  <Table dataSource={dataSource} columns={this.getColumns()} showHeader={false} pagination={false} />
+                  <ul className="PersonalInfo">
+                    {this.getDataSource().map((source) => {
+                      return (
+                        <li>
+                          <span className="title">{source.info}</span>
+                          <span className="text">
+                            <EditableCell
+                              value={source.description}
+                              onChange={() => {}}
+                            />
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </Card>
               </Col>
               <Col md={12}>
-                <Card title="Hello">
+                <Card title="Other information">
                   hello
                 </Card>
               </Col>

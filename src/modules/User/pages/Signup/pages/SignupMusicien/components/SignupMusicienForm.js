@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Icon, Alert, Button } from 'antd';
+import { Form, Icon, Alert, Button, notification } from 'antd';
 
 import FormInputs from '../../../../../../common/components/Form';
 
@@ -66,18 +66,25 @@ const styleMusicaux = [{
 
 class SignupMusicienForm extends Component {
   static propTypes = {
+    history: PropTypes.object.isRequired,
     form: PropTypes.object.isRequired,
     createMusicien: PropTypes.func.isRequired,
   }
 
   handleSubmit = (e) => {
-    const { form, createMusicien } = this.props;
+    const { form, createMusicien, history } = this.props;
     e.preventDefault();
     form.validateFields((error, values) => {
       if (!error) {
         return createMusicien(values).then(({ payload }) => {
           if (payload.success) {
             form.resetFields();
+            notification.success({
+              message: 'Sign in',
+              description: 'You are all set, start your new experience in the plateform',
+              duration: 5,
+            });
+            history.push('/signin');
           } else {
             form.setFields({
               formValidation: {
@@ -90,8 +97,7 @@ class SignupMusicienForm extends Component {
     });
   }
   render() {
-    const { logging } = this.props;
-    const { getFieldDecorator, getFieldError } = this.props.form;
+    const { getFieldDecorator, getFieldError, isSubmitting } = this.props.form;
     const error = getFieldError('formValidation');
 
     return (
@@ -103,22 +109,6 @@ class SignupMusicienForm extends Component {
         className="clearfix m-auto"
         style={{ maxWidth: '600px' }}
       >
-        <FormInputs.FormItem
-          label="Prénom"
-          name="firstname"
-          placeholder="Prénom"
-          component={FormInputs.InputForm}
-          decorator={getFieldDecorator}
-          validationRules={[{ required: true, message: 'Please input your firstname.' }]}
-        />
-        <FormInputs.FormItem
-          label="Nom de famille"
-          name="lastname"
-          placeholder="Nom de famille"
-          component={FormInputs.InputForm}
-          decorator={getFieldDecorator}
-          validationRules={[{ required: true, message: 'Please input your lastname.' }]}
-        />
         <FormInputs.FormItem
           label="Nom d'utilisateur"
           name="username"
@@ -201,7 +191,7 @@ class SignupMusicienForm extends Component {
           <Button
             type="primary"
             htmlType="submit"
-            loading={logging}
+            loading={isSubmitting()}
             icon="login"
           >
             Commencez l'exploration

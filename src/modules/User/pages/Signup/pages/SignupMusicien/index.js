@@ -15,14 +15,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 class SignupPage extends Component {
   static propTypes = {
     create: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
   }
 
   render() {
-    const { create } = this.props;
+    const { create, history } = this.props;
     return (
       <div className="Signin">
         <h1 className="Section__Title text-center">Créer votre profil de Musicien</h1>
-        <SignupMusicienForm createMusicien={create} />
+        <SignupMusicienForm createMusicien={create} history={history} />
       </div>
     );
   }
