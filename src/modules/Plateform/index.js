@@ -11,50 +11,33 @@ class Plateform extends Component {
     authUser: PropTypes.object.isRequired,
   }
 
-  onCellChange(...args) {
-    console.log(...args);
-  }
-
-  getColumns() {
-    return [{
-      key: 'info',
-      dataIndex: 'info',
-      title: 'Information',
-    }, {
-      key: 'description',
-      dataIndex: 'description',
-      title: 'Description',
-      render: (text, record, index) => (
-        <EditableCell
-          value={text}
-          onChange={this.onCellChange(index, record, 'courseName')}
-        />
-      ),
-    }];
-  }
-
   getDataSource() {
     const { authUser } = this.props;
     return [{
-      key: '0',
+      key: 'name',
       info: 'Full Name: ',
       description: authUser.get('displayName'),
+      isEditable: true,
     }, {
-      key: '1',
+      key: 'description',
       info: 'About Me: ',
       description: 'Hi, I’m James, I’m 36 and I work as a Digital Designer for the “Daydreams” Agency in Pier 56',
+      isEditable: true,
     }, {
-      key: '2',
+      key: 'birthday',
       info: 'Birthday: ',
       description: 'December 14th, 1980',
+      isEditable: true,
     }, {
-      key: '3',
+      key: 'email',
       info: 'Email: ',
       description: authUser.get('email'),
+      isEditable: false,
     }, {
-      key: '4',
+      key: 'userType',
       info: 'User type: ',
       description: authUser.get('isAdmin') ? "You're admin!" : authUser.get('type'),
+      isEditable: false,
     }];
   }
 
@@ -67,7 +50,7 @@ class Plateform extends Component {
           <div className="container">
             <Row gutter={32}>
               <Col md={12}>
-                <Card title="Information personnelle">
+                <Card title="Information personnelle" className="m-b-15">
                   <div className="UserImage">
                     <div
                       className="image-upload-container"
@@ -80,10 +63,13 @@ class Plateform extends Component {
                         <li>
                           <span className="title">{source.info}</span>
                           <span className="text">
-                            <EditableCell
-                              value={source.description}
-                              onChange={() => {}}
-                            />
+                            {!source.isEditable
+                              ? source.description
+                              : <EditableCell
+                                value={source.description}
+                                onChange={() => {}}
+                              />
+                            }
                           </span>
                         </li>
                       );
@@ -92,8 +78,11 @@ class Plateform extends Component {
                 </Card>
               </Col>
               <Col md={12}>
-                <Card title="Other information">
-                  hello
+                <Card className="m-b-15" title="Vos contributions">
+                  Retrouvez ici les concerts auxquels vous avez contribué
+                </Card>
+                <Card title="Vos souhaits">
+                  Retrouvez ici les concerts auxquels vous êtes interessé
                 </Card>
               </Col>
             </Row>
