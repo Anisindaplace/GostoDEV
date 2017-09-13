@@ -119,6 +119,14 @@ class SignupMusicienForm extends Component {
           validationRules={[{ required: true, message: 'Please input your username.' }]}
         />
         <FormInputs.FormItem
+          label="Addresse mail"
+          name="email"
+          placeholder="Addresse mail"
+          component={FormInputs.InputForm}
+          decorator={getFieldDecorator}
+          validationRules={[{ required: true, message: 'Please input your email.' }]}
+        />
+        <FormInputs.FormItem
           label="Mot de passe"
           name="password"
           placeholder="Mot de passe"
@@ -127,14 +135,6 @@ class SignupMusicienForm extends Component {
           type="password"
           decorator={getFieldDecorator}
           validationRules={[{ required: true, message: 'Please input your Password.' }]}
-        />
-        <FormInputs.FormItem
-          label="Addresse mail"
-          name="email"
-          placeholder="Addresse mail"
-          component={FormInputs.InputForm}
-          decorator={getFieldDecorator}
-          validationRules={[{ required: true, message: 'Please input your email.' }]}
         />
         <FormInputs.FormItem
           label="Type"
@@ -170,12 +170,51 @@ class SignupMusicienForm extends Component {
           decorator={getFieldDecorator}
         />
         <FormInputs.FormItem
-          label="Style musical"
-          name="musicalStyle"
+          label="Style musicaux"
+          name="musicalStyles"
+          mode="tags"
           placeholder="Choissisez vos styles musicaux"
           helpText="Vous pouvez choisir un ou plusieurs style musicaux"
           component={FormInputs.SelectForm}
           options={styleMusicaux}
+          decorator={getFieldDecorator}
+        />
+        <FormInputs.FormItem
+          label="Influence / Répertoire"
+          name="repositories"
+          mode="tags"
+          placeholder="Choissisez vos répertoires"
+          helpText="Vous pouvez choisir un ou plusieurs répertoire"
+          component={FormInputs.SelectForm}
+          options={styleMusicaux}
+          decorator={getFieldDecorator}
+        />
+        <FormInputs.FormItem
+          label="Members"
+          name="members"
+          placeholder="Avec qui vous travailler ..."
+          type="textarea"
+          helpText="Ce champ n'est pas obligatoire si vous êtes un artiste solo"
+          component={FormInputs.InputForm}
+          decorator={getFieldDecorator}
+        />
+        <FormInputs.FormItem
+          label="Instruments"
+          name="instruments"
+          mode="tags"
+          placeholder="Choissisez vos instruments"
+          helpText="Vous pouvez choisir un ou plusieurs instrument"
+          component={FormInputs.SelectForm}
+          options={styleMusicaux}
+          decorator={getFieldDecorator}
+        />
+        <FormInputs.FormItem
+          label="Sons"
+          name="songs"
+          placeholder="Montrez-nous ce que vous savez faire ..."
+          type="textarea"
+          helpText="Veuillez mettre chaque son dans une ligne"
+          component={FormInputs.InputForm}
           decorator={getFieldDecorator}
         />
         {error &&

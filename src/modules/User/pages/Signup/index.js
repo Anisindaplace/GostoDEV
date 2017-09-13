@@ -7,6 +7,7 @@ import { Row, Col, Button, Icon } from 'antd';
 import { signin } from '../../redux/authReducer';
 
 import SignupMusicienPage from './pages/SignupMusicien';
+import SignupOrganizerPage from './pages/SignupOrganizer';
 
 import Breacrumb from '../../../common/components/Breadcrumb/Breadcrumb';
 import Route from '../../../common/components/Routes/Route';
@@ -51,7 +52,7 @@ class SignupPage extends Component {
               type="primary"
               size="large"
             >
-              <Link to="/signup/professionnel">Continuer <Icon type="right" /></Link>
+              <Link to="/signup/organizer">Continuer <Icon type="right" /></Link>
             </Button>
           </div>
         </Col>
@@ -76,6 +77,7 @@ class SignupPage extends Component {
     return (
       <Switch>
         <Route path="/signup/musicien" component={SignupMusicienPage} />
+        <Route path="/signup/organizer" component={SignupOrganizerPage} />
       </Switch>
     );
   }

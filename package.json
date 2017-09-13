@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^2.12.8",
+    "axios": "^0.16.2",
     "classnames": "^2.2.5",
     "custom-react-scripts": "^0.2.0",
     "history": "^4.7.2",
