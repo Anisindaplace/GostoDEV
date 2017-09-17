@@ -16,7 +16,13 @@ const CONCERTS_GET_REQUEST_ENDED = 'concert/CONCERTS_GET_REQUEST_ENDED';
 function formatFormData(data) {
   const formData = new FormData();
   forEach(data, (value, key) => {
-    formData.append(key, Array.isArray(value) ? JSON.stringify(value) : value);
+    if (key === 'images') {
+      forEach(value, (image) => {
+        formData.append('images', image);
+      });
+    } else {
+      formData.append(key, Array.isArray(value) ? JSON.stringify(value) : value);
+    }
   });
   return formData;
 }
@@ -68,19 +74,24 @@ export const fetchConcerts = () => {
 };
 
 const ConcertRecord = Record({
-  id: null,
-  musicienId: null,
-  type: null,
-  sceneName: null,
-  website: null,
-  biography: null,
+  id: 1,
+  concertId: null,
+  shortTitle: null,
+  description: null,
+  images: List(),
+  concertDate: null,
+  time: null,
+  duration: 7,
+  artisteCategories: List(),
   musicalStyles: List(),
-  repository: null,
-  inspirations: null,
-  instruments: List(),
-  songs: null,
-  userId: null,
-  User: Map(),
+  groupSize: null,
+  minPay: null,
+  maxPay: null,
+  isMaterial: true,
+  advantages: null,
+  remarks: null,
+  organizerId: null,
+  Organizer: Map(),
   _metadata: Map({
     fetching: false,
     fetched: Map({
@@ -129,13 +140,13 @@ export default function concertsReducer(state = initialState, action) {
         .setIn(['_metadata', 'fetched', 'error'], action.payload.errors);
 
     case CONCERTS_GET_REQUEST_ENDED:
-      if (!action.payload.success || !action.payload.musiciens) return state;
+      if (!action.payload.success || !action.payload.concerts) return state;
       return state
         .setIn(['_metadata', 'fetching'], false)
         .setIn(['_metadata', 'fetched', 'status'], true)
-        .mergeIn(['entities'], fromJS(action.payload.musiciens).map((musicien) => {
-          const existingMusicien = state.getIn(['entities', musicien.get('musicienId')]);
-          return existingMusicien ? existingMusicien.merge(musicien) : new ConcertRecord(musicien);
+        .mergeIn(['entities'], fromJS(action.payload.concerts).map((concert) => {
+          const existingConcert = state.getIn(['entities', concert.get('concertId')]);
+          return existingConcert ? existingConcert.merge(concert) : new ConcertRecord(concert);
         }));
 
     default:

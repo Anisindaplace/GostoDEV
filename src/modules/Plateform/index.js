@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import Breacrumb from '../common/components/Breadcrumb/Breadcrumb';
 import EditableCell from '../common/components/Table/EditableCell';
+import ConcertItem from '../Concert/components/ConcertItem';
 import './style.scss';
 
 class Plateform extends Component {
@@ -17,7 +20,6 @@ class Plateform extends Component {
       key: 'name',
       info: 'Nom utilisateur: ',
       description: authUser.get('displayName'),
-      isEditable: true,
     }, {
       key: 'type',
       info: 'Type: ',
@@ -36,12 +38,19 @@ class Plateform extends Component {
       info: 'Biographie: ',
       description: authUser.getIn(['musicien', 'biography']),
       isEditable: false,
-    }, {
-      key: 'userType',
-      info: "Type d'utilisateur",
-      description: authUser.get('isAdmin') ? "You're admin!" : authUser.get('musicien') ? 'Musicien' : 'Organisateur de concerts',
-      isEditable: false,
     }];
+  }
+
+  getUserType() {
+    const { authUser } = this.props;
+    if (authUser.get('isAdmin')) {
+      return 'admin';
+    } else if (authUser.get('musicien')) {
+      return 'musicien';
+    } else if (authUser.get('organizer')) {
+      return 'organizer';
+    }
+    return 'unkown user';
   }
 
   render() {
@@ -52,7 +61,7 @@ class Plateform extends Component {
         <div className="section before-after">
           <div className="container">
             <Row gutter={32}>
-              <Col md={12}>
+              <Col md={8}>
                 <Card title="Information personnelle" className="m-b-15">
                   <div className="UserImage">
                     <div
@@ -80,19 +89,56 @@ class Plateform extends Component {
                   </ul>
                 </Card>
               </Col>
-              <Col md={12}>
-                <Card className="m-b-15" title="Vos contributions">
-                  Retrouvez ici les concerts auxquels vous avez contribué
-                </Card>
-                <Card title="Vos souhaits">
-                  Retrouvez ici les concerts auxquels vous êtes interessé
-                </Card>
+              <Col md={16}>
+                {this.renderContentByType(this.getUserType())}
               </Col>
             </Row>
           </div>
         </div>
       </div>
     );
+  }
+
+  renderContentByType(type) {
+    const { authUser } = this.props;
+    switch (type) {
+      case 'organizer': {
+        const concerts = authUser.getIn(['organizer', 'Concerts']);
+        const concertsSize = concerts.size;
+        return (
+          <Card
+            className="m-b-15"
+            title="Vos
+            concerts"
+            extra={<Button type="primary"><Link to="/concerts/new">Créer un concert</Link></Button>}
+          >
+            {
+              concertsSize === 0
+                ? (
+                  <div className="">
+                    Vous n'avez toujours pas créer votre premier concert, <Link to="/concerts/new">Cliquer ici pour en créer</Link>
+                  </div>
+                )
+                : (
+                  <Row gutter={16}>
+                    {concerts.map(concert => (
+                      <Col span={12}>
+                        <ConcertItem
+                          title={concert.get('shortTitle')}
+                          description={concert.get('description')}
+                          imageSrc={concert.getIn(['images', '0'])}
+                          concertDate={moment(concert.get('concertDate')).format('L')}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                )
+            }
+          </Card>
+        );
+      }
+      default: return <div />;
+    }
   }
 }
 

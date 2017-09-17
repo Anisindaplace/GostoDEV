@@ -4,14 +4,13 @@ import { ConnectedRouter } from 'react-router-redux';
 import { LocaleProvider } from 'antd';
 // It's recommended to set locale in entry file globaly.
 import enUS from 'antd/lib/locale-provider/en_US';
-import 'moment/locale/en-ca';
+import 'moment/locale/fr';
 import moment from 'moment';
 import App from './modules/Application/App';
 import PublicRoute from './modules/common/components/Routes/PublicRoute';
 import { store, history } from './store';
 
-moment.locale('en-ca');
-
+moment.locale('fr');
 
 const Root = () => (
   <Provider store={store}>

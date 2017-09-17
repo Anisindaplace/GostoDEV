@@ -1,33 +1,38 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
+import moment from 'moment';
 
-import concert1 from '../../assets/concert1.jpg';
-import concert2 from '../../assets/concert2.jpg';
-import concert3 from '../../assets/concert3.jpg';
-import concert4 from '../../assets/concert4.jpg';
 import Breacrumb from '../../../common/components/Breadcrumb/Breadcrumb';
 import ConcertItem from '../../components/ConcertItem';
 
+import FetchConcerts from '../../hocs/FetchConcerts';
+
+@FetchConcerts
 class ConcertsPages extends Component {
+  static propTypes = {
+    concerts: PropTypes.array,
+  };
+
   render() {
+    const { concerts } = this.props;
     return (
       <div>
         <Breacrumb pageTitle="Concerts" />
         <div className="section before-after">
           <div className="container clearfix">
             <Row gutter={16}>
-              <Col className="gutter-row" md={8}>
-                <ConcertItem title="Tales au Wall street Pigalle" subtitle="Wall street" imageSrc={concert1} />
-              </Col>
-              <Col className="gutter-row" md={8}>
-                <ConcertItem title="Test" subtitle="Hello world" imageSrc={concert2} />
-              </Col>
-              <Col className="gutter-row" md={8}>
-                <ConcertItem title="Test" subtitle="Hello world" imageSrc={concert3} />
-              </Col>
-              <Col className="gutter-row" md={8}>
-                <ConcertItem title="Test" subtitle="Hello world" imageSrc={concert4} />
-              </Col>
+              {concerts.map(concert => (
+                <Col className="gutter-row" md={8}>
+                  <ConcertItem
+                    title={concert.shortTitle}
+                    subtitle={concert.shortTitle}
+                    description={concert.description}
+                    concertDate={moment(concert.concertDate).format('L')}
+                    imageSrc={concert.images[0]}
+                  />
+                </Col>
+              ))}
             </Row>
           </div>
         </div>

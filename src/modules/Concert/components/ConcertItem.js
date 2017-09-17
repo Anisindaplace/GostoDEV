@@ -1,21 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ConcertItem.scss';
 
-export const ConcertIntem = ({ title, subtitle, imageSrc }) => {
+export const ConcertItem = ({ title, subTitle, description, imageSrc, concertDate }) => {
   return (
     <div className="Card" style={{ backgroundImage: `url(${imageSrc})` }}>
       <div className="Card__Title title-content">
         <h3>{title}</h3>
         <hr />
-        <div className="intro">{subtitle}</div>
+        <div className="intro">{subTitle}</div>
       </div>
       <div className="Card__Info">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim. 
+        {description}
       </div>
       <div className="Card__UtilityInfo">
         <ul className="Card__UtilityList">
           <li className="comments">12</li>
-          <li className="date">03.12.2015</li>
+          <li className="date">{concertDate}</li>
         </ul>
       </div>
       <div className="gradient-overlay" />
@@ -24,4 +25,12 @@ export const ConcertIntem = ({ title, subtitle, imageSrc }) => {
   );
 };
 
-export default ConcertIntem;
+ConcertItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  subTitle: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string.isRequired,
+  concertDate: PropTypes.string.isRequired,
+};
+
+export default ConcertItem;

@@ -5,7 +5,7 @@ import { Select } from 'antd';
 class SelectForm extends Component {
   static propTypes = {
     id: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOf([PropTypes.array, PropTypes.string]),
     size: PropTypes.string,
     multiple: PropTypes.bool,
     placeholder: PropTypes.string,
