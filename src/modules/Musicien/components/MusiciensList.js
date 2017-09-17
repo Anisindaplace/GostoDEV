@@ -20,7 +20,7 @@ export default class MusiciensList extends Component {
       <Col className="gutter-row" md={12} key={musicien.musicienId}>
         <div className="MusicienItem">
           <div className="MusicienItem__image">
-            <div style={{ backgroundImage: `url(${musicien.User.image})` }} />
+            <div style={{ backgroundImage: `url(${musicien.user.image})` }} />
           </div>
           <div className="MusicienItem__description">
             <div className="MusicienItem__descriptionTitle">

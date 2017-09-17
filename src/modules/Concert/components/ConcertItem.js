@@ -27,7 +27,14 @@ const ConcertPopoverContent = (props) => {
       </div>
       {props.isMusicien &&
         <div className="ConcertPopoverContent__action">
-          <Button type="primary" icon="heart" className="btn-block" onClick={props.sendInterest}>SEND INVITATION</Button>
+          <Button
+            type={props.isInterestedIn ? 'secondary' : 'primary'}
+            icon="heart"
+            className="btn-block"
+            onClick={!!props.isInterestedIn && props.sendInterest}
+          >
+            {props.isInterestedIn ? 'INVITATION WAS SENT' : 'SEND INVITATION'}
+          </Button>
         </div>
       }
     </div>
@@ -43,6 +50,7 @@ ConcertPopoverContent.propTypes = {
   musicalStyles: PropTypes.array.isRequired,
   artisteCategories: PropTypes.array.isRequired,
   isMusicien: PropTypes.bool,
+  isInterestedIn: PropTypes.bool,
   sendInterest: PropTypes.func.isRequired,
 };
 

@@ -106,6 +106,7 @@ const ConcertRecord = Record({
   remarks: null,
   organizerId: null,
   Organizer: Map(),
+  interestedBy: List(),
   _metadata: Map({
     fetching: false,
     fetched: Map({

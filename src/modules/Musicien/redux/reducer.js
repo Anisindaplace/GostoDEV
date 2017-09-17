@@ -80,7 +80,8 @@ const MusicienRecord = Record({
   instruments: List(),
   songs: null,
   userId: null,
-  User: Map(),
+  user: Map(),
+  interestedIn: List(),
   _metadata: Map({
     fetching: false,
     fetched: Map({
