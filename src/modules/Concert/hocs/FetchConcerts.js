@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchConcerts } from '../redux/reducer';
+import { fetchConcerts, sendInterestInConcert } from '../redux/reducer';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -13,6 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchConcertsData: () => dispatch(fetchConcerts()),
+    sendInterest: concertId => dispatch(sendInterestInConcert(concertId)),
   };
 };
 

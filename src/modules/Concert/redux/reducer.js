@@ -13,6 +13,10 @@ const CONCERTS_GET_REQUEST_STARTED = 'concert/CONCERTS_GET_REQUEST_STARTED';
 const CONCERTS_GET_REQUEST_FAILED = 'concert/CONCERTS_GET_REQUEST_FAILED';
 const CONCERTS_GET_REQUEST_ENDED = 'concert/CONCERTS_GET_REQUEST_ENDED';
 
+const CONCERT_INTEREST_REQUEST_STARTED = 'concert/CONCERT_INTEREST_REQUEST_STARTED';
+const CONCERT_INTEREST_REQUEST_FAILED = 'concert/CONCERT_INTEREST_REQUEST_FAILED';
+const CONCERT_INTEREST_REQUEST_ENDED = 'concert/CONCERT_INTEREST_REQUEST_ENDED';
+
 function formatFormData(data) {
   const formData = new FormData();
   forEach(data, (value, key) => {
@@ -44,6 +48,16 @@ export const createConcert = (data) => {
       method: 'POST',
       body: formatFormData(values),
       types: [CONCERT_CREATE_REQUEST_STARTED, CONCERT_CREATE_REQUEST_ENDED, CONCERT_CREATE_REQUEST_FAILED],
+    },
+  };
+};
+
+export const sendInterestInConcert = (concertId) => {
+  return {
+    [CALL_API]: {
+      endpoint: `/concerts/${concertId}/interest`,
+      method: 'POST',
+      types: [CONCERT_INTEREST_REQUEST_STARTED, CONCERT_INTEREST_REQUEST_ENDED, CONCERT_INTEREST_REQUEST_FAILED],
     },
   };
 };

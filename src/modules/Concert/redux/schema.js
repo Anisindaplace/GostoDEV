@@ -1,5 +1,5 @@
 import { schema } from 'normalizr';
 
 export default new schema.Entity('concerts', {}, {
-  idAttribute: 'concerId',
+  idAttribute: 'concertId',
 });

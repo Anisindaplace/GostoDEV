@@ -61,7 +61,13 @@ class App extends Component {
     const { authUser, isAuthenticated, loaded, loading } = this.props;
     return (
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route
+          exact
+          path="/"
+          component={HomePage}
+          isAuthenticated={isAuthenticated}
+          authUser={authUser}
+        />
         <Route exact path="/concerts" component={ConcertsPage} />
         <Route exact path="/musiciens" component={MusiciensListPage} />
         <PrivateRoute

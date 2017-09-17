@@ -5,6 +5,36 @@ $h-color:     #FFFFFF;
 $yellow:      #D0BB57;
 $txt-color:   #DCE3E7;
 
+.ConcertPopoverContent {
+  width: 320px;
+
+  .ConcertPopoverContent__title {
+    padding: 5px 0 10px;
+    color: #ed145b;
+    font-size: 20px;
+    font-family: 'Baloo Bhaijaan';
+  }
+
+  .ConcertPopoverContent__duration {
+    background: #eee;
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 4px -15px 4px;
+    padding: 10px 15px;
+  }
+
+  .ConcertPopoverContent__description,
+  .ConcertPopoverContent__extra {
+    padding: 10px 0;
+  }
+
+  .ConcertPopoverContent__extraItem {
+    color: #ed145b;
+    text-transform: uppercase;
+  }
+}
+
 .Card {
   position: relative;
   height: $card-height;

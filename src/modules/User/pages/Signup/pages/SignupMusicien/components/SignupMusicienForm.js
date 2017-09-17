@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Alert, Button, notification, Steps } from 'antd';
 import classNames from 'classnames';
+
 import { musicienTypes, styleMusicaux } from '../constants';
-
 import FormInputs from '../../../../../../common/components/Form';
-
 
 const steps = [{
   title: 'Login',
@@ -27,6 +26,7 @@ class SignupMusicienForm extends Component {
 
   state = {
     current: 0,
+    isSubmitting: false,
   }
 
   next() {
@@ -44,7 +44,9 @@ class SignupMusicienForm extends Component {
     e.preventDefault();
     form.validateFields((error, values) => {
       if (!error) {
+        this.setState({ isSubmitting: true });
         return createMusicien(values).then(({ payload }) => {
+          this.setState({ isSubmitting: false });
           if (payload.success) {
             form.resetFields();
             notification.success({
@@ -73,8 +75,8 @@ class SignupMusicienForm extends Component {
   }
 
   render() {
-    const { current } = this.state;
-    const { getFieldDecorator, getFieldError, isSubmitting } = this.props.form;
+    const { current, isSubmitting } = this.state;
+    const { getFieldDecorator, getFieldError } = this.props.form;
     const error = getFieldError('formValidation');
 
     return (
@@ -99,7 +101,10 @@ class SignupMusicienForm extends Component {
                 prefix={<Icon type="user" style={{ fontSize: 13 }} />}
                 component={FormInputs.InputForm}
                 decorator={getFieldDecorator}
-                validationRules={[{ required: true, message: 'Please input your username.' }]}
+                validationRules={[
+                  { required: true, message: 'Please input your username.' },
+                  { type: 'string', pattern: /^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$/, message: 'The username must include only Alphanumeric characters' },
+                ]}
               />
               <FormInputs.FormItem
                 label="Addresse mail"
@@ -107,7 +112,10 @@ class SignupMusicienForm extends Component {
                 placeholder="Addresse mail"
                 component={FormInputs.InputForm}
                 decorator={getFieldDecorator}
-                validationRules={[{ required: true, message: 'Please input your email.' }]}
+                validationRules={[
+                  { required: true, message: 'Please input an email.' },
+                  { type: 'email', message: 'Please input a correct email.' },
+                ]}
               />
               <FormInputs.FormItem
                 label="Mot de passe"
@@ -117,7 +125,7 @@ class SignupMusicienForm extends Component {
                 component={FormInputs.InputForm}
                 type="password"
                 decorator={getFieldDecorator}
-                validationRules={[{ required: true, message: 'Please input your Password.' }]}
+                validationRules={[{ required: true, message: 'Please input your password.' }]}
               />
             </div>
             <div className={classNames('FormSection', current === 1 && 'visible')}>
@@ -144,7 +152,7 @@ class SignupMusicienForm extends Component {
                 placeholder="http://www.example.com/"
                 component={FormInputs.InputForm}
                 decorator={getFieldDecorator}
-                validationRules={[{ required: true, message: 'Please input your website.' }]}
+                validationRules={[{ required: true, type: 'url', message: 'Please input a correct website url.' }]}
               />
               <FormInputs.FormItem
                 label="Présentation/Biographie"
@@ -238,7 +246,7 @@ class SignupMusicienForm extends Component {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  loading={isSubmitting()}
+                  loading={isSubmitting}
                   icon="login"
                 >
                   Commencez l'exploration

@@ -31,6 +31,11 @@
   visibility: hidden;
 }
 
+.btn-block {
+  display: block !important;
+  width: 100%;
+}
+
 .pull-right { float: right; }
 .pull-left { float: left; }
 .text-center { text-align: center; }

@@ -11,12 +11,18 @@ class SignupOrganizerForm extends Component {
     createOrganizer: PropTypes.func.isRequired,
   }
 
+  state = {
+    isSubmitting: false,
+  }
+
   handleSubmit = (e) => {
     const { form, createOrganizer, history } = this.props;
     e.preventDefault();
     form.validateFields((error, values) => {
       if (!error) {
+        this.setState({ isSubmitting: true });
         return createOrganizer(values).then(({ payload }) => {
+          this.setState({ isSubmitting: false });
           if (payload.success) {
             form.resetFields();
             notification.success({
@@ -37,7 +43,8 @@ class SignupOrganizerForm extends Component {
     });
   }
   render() {
-    const { getFieldDecorator, getFieldError, isSubmitting } = this.props.form;
+    const { isSubmitting } = this.state;
+    const { getFieldDecorator, getFieldError } = this.props.form;
     const error = getFieldError('formValidation');
 
     return (
@@ -114,7 +121,7 @@ class SignupOrganizerForm extends Component {
           <Button
             type="primary"
             htmlType="submit"
-            loading={isSubmitting()}
+            loading={isSubmitting}
             icon="login"
           >
             Commencez l'exploration
