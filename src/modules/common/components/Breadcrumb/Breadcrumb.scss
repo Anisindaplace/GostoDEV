@@ -18,16 +18,20 @@
 
 .page-title {
   margin-bottom: 0;
-  text-transform: uppercase;
   text-align: center;
   padding-top: 70px;
   padding-bottom: 70px;
 
   h1 {
-    font-size: 46px;
     letter-spacing: 14px;
+    text-transform: uppercase;
     color: #fff;
     font-family: 'Baloo Bhaijaan';
+    font-size: 46px;
+  }
+
+  h2 {
+    color: #fff;
   }
 }
 

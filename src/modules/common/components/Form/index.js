@@ -7,6 +7,7 @@ import SelectForm from './SelectForm';
 import FileForm from './FileForm';
 import SwitchForm from './SwitchForm';
 import TimePickerForm from './TimePickerForm';
+import InputNumberForm from './InputNumberForm';
 
 const controls = {
   Form,
@@ -18,6 +19,7 @@ const controls = {
   FileForm,
   SwitchForm,
   TimePickerForm,
+  InputNumberForm,
 };
 
 export default controls;

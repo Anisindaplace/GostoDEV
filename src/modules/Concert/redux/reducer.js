@@ -1,17 +1,17 @@
 import { Map, Record, fromJS, List } from 'immutable';
 import { CALL_API } from 'redux-api-middleware';
-import { each, head, forEach } from 'lodash';
+import { each, map, forEach } from 'lodash';
 import { normalize } from 'normalizr';
 
-import musicienSchema from './schema';
+import concertSchema from './schema';
 
-const MUSICIEN_CREATE_REQUEST_STARTED = 'musicien/MUSICIEN_CREATE_REQUEST_STARTED';
-const MUSICIEN_CREATE_REQUEST_FAILED = 'musicien/MUSICIEN_CREATE_REQUEST_FAILED';
-const MUSICIEN_CREATE_REQUEST_ENDED = 'musicien/MUSICIEN_CREATE_REQUEST_ENDED';
+const CONCERT_CREATE_REQUEST_STARTED = 'concert/CONCERT_CREATE_REQUEST_STARTED';
+const CONCERT_CREATE_REQUEST_FAILED = 'concert/CONCERT_CREATE_REQUEST_FAILED';
+const CONCERT_CREATE_REQUEST_ENDED = 'concert/CONCERT_CREATE_REQUEST_ENDED';
 
-const MUSICIENS_GET_REQUEST_STARTED = 'musicien/MUSICIENS_GET_REQUEST_STARTED';
-const MUSICIENS_GET_REQUEST_FAILED = 'musicien/MUSICIENS_GET_REQUEST_FAILED';
-const MUSICIENS_GET_REQUEST_ENDED = 'musicien/MUSICIENS_GET_REQUEST_ENDED';
+const CONCERTS_GET_REQUEST_STARTED = 'concert/CONCERTS_GET_REQUEST_STARTED';
+const CONCERTS_GET_REQUEST_FAILED = 'concert/CONCERTS_GET_REQUEST_FAILED';
+const CONCERTS_GET_REQUEST_ENDED = 'concert/CONCERTS_GET_REQUEST_ENDED';
 
 function formatFormData(data) {
   const formData = new FormData();
@@ -21,12 +21,12 @@ function formatFormData(data) {
   return formData;
 }
 
-export const createMusicien = (data) => {
+export const createConcert = (data) => {
   const values = {};
   each(data, (value, key) => {
     const isImage = key === 'images';
     if (isImage && value) {
-      values.image = head(value).originFileObj;
+      values.images = map(value, 'originFileObj');
     } else {
       values[key] = value;
     }
@@ -34,40 +34,40 @@ export const createMusicien = (data) => {
 
   return {
     [CALL_API]: {
-      endpoint: '/musiciens',
+      endpoint: '/concerts',
       method: 'POST',
       body: formatFormData(values),
-      types: [MUSICIEN_CREATE_REQUEST_STARTED, MUSICIEN_CREATE_REQUEST_ENDED, MUSICIEN_CREATE_REQUEST_FAILED],
+      types: [CONCERT_CREATE_REQUEST_STARTED, CONCERT_CREATE_REQUEST_ENDED, CONCERT_CREATE_REQUEST_FAILED],
     },
   };
 };
 
-export const fetchMusiciens = () => {
+export const fetchConcerts = () => {
   return {
     [CALL_API]: {
-      endpoint: '/musiciens',
+      endpoint: '/concerts',
       method: 'GET',
-      types: [MUSICIENS_GET_REQUEST_STARTED, {
-        type: MUSICIENS_GET_REQUEST_ENDED,
+      types: [CONCERTS_GET_REQUEST_STARTED, {
+        type: CONCERTS_GET_REQUEST_ENDED,
         payload: (action, state, res) => {
           return res.json().then((response) => {
             if (!response.success) {
               return response;
             }
 
-            const result = normalize(response.data, [musicienSchema]);
+            const result = normalize(response.data, [concertSchema]);
             return {
               ...response,
-              musiciens: result.entities.musiciens,
+              concerts: result.entities.concerts,
             };
           });
         },
-      }, MUSICIENS_GET_REQUEST_FAILED],
+      }, CONCERTS_GET_REQUEST_FAILED],
     },
   };
 };
 
-const MusicienRecord = Record({
+const ConcertRecord = Record({
   id: null,
   musicienId: null,
   type: null,
@@ -90,9 +90,9 @@ const MusicienRecord = Record({
   }),
 });
 
-const musicienState = new MusicienRecord();
+const concertState = new ConcertRecord();
 
-function musicienReducer(state = musicienState, action) {
+function concertReducer(state = concertState, action) {
   switch (action.type) {
     default: return state;
   }
@@ -109,33 +109,33 @@ const initialState = Map({
   }),
 });
 
-export default function musiciensReducer(state = initialState, action) {
+export default function concertsReducer(state = initialState, action) {
   switch (action.type) {
-    case MUSICIEN_CREATE_REQUEST_STARTED:
-    case MUSICIEN_CREATE_REQUEST_FAILED:
-    case MUSICIEN_CREATE_REQUEST_ENDED:
-    // .setIn(['entities', action.payload.metadata], musicienReducer(state.getIn(['entities', action.payload.metadata], action)))
+    case CONCERT_CREATE_REQUEST_STARTED:
+    case CONCERT_CREATE_REQUEST_FAILED:
+    case CONCERT_CREATE_REQUEST_ENDED:
+    // .setIn(['entities', action.payload.metadata], concertReducer(state.getIn(['entities', action.payload.metadata], action)))
       return state;
 
-    case MUSICIENS_GET_REQUEST_STARTED:
+    case CONCERTS_GET_REQUEST_STARTED:
       return state
         .setIn(['_metadata', 'fetched', 'status'], false)
         .setIn(['_metadata', 'fetching'], false);
 
-    case MUSICIENS_GET_REQUEST_FAILED:
+    case CONCERTS_GET_REQUEST_FAILED:
       return state
         .setIn(['_metadata', 'fetching'], false)
         .setIn(['_metadata', 'fetched', 'status'], true)
         .setIn(['_metadata', 'fetched', 'error'], action.payload.errors);
 
-    case MUSICIENS_GET_REQUEST_ENDED:
+    case CONCERTS_GET_REQUEST_ENDED:
       if (!action.payload.success || !action.payload.musiciens) return state;
       return state
         .setIn(['_metadata', 'fetching'], false)
         .setIn(['_metadata', 'fetched', 'status'], true)
         .mergeIn(['entities'], fromJS(action.payload.musiciens).map((musicien) => {
           const existingMusicien = state.getIn(['entities', musicien.get('musicienId')]);
-          return existingMusicien ? existingMusicien.merge(musicien) : new MusicienRecord(musicien);
+          return existingMusicien ? existingMusicien.merge(musicien) : new ConcertRecord(musicien);
         }));
 
     default:

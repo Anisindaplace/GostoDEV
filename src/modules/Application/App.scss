@@ -30,3 +30,35 @@ body, #root, .App, .App .layout {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+.section-header {
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 60px;
+
+  .section-title {
+    text-transform: uppercase;
+    margin: 0;
+    font-family: 'Baloo Bhaijaan';
+    font-size: 36px;
+  }
+
+  .section-subtext {
+    margin-top: 5px;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 100px;
+    left: 50%;
+    bottom: 0;
+    margin-left: -50px;
+    background-color: #111111;
+  }
+}

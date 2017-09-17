@@ -68,12 +68,16 @@ class AppLayout extends Component {
       <Menu.SubMenu
         title={
           <div className="UserAvatar">
-            <Avatar src={authUser.get('profileImageURL')} />
+            <Avatar src={authUser.get('image') || authUser.get('profileImageURL')} />
             <span className="UserAvatar__Name">{authUser.get('displayName')}</span>
           </div>
         }
       >
-        <Menu.Item><Icon type="edit" /> Profil</Menu.Item>
+        <Menu.Item>
+          <Link to="/plateform">
+            <Icon type="edit" /> Profil
+          </Link>
+        </Menu.Item>
         <Menu.Item>
           <div onClick={signout}>
             <Icon type="logout" /> Se déconnecter

@@ -6,7 +6,10 @@ import { Switch } from 'react-router-dom';
 import { signout } from '../User/redux/authReducer';
 
 // Pages
-import ConcertsPage from '../Concert';
+import HomePage from './pages/HomePage';
+import ConcertsPage from '../Concert/pages/List/ConcertsList';
+import CreateConcertPage from '../Concert/pages/Create/CreateConcert';
+import MusiciensListPage from '../Musicien/pages/List/MusiciensListPage';
 import SigninPage from '../User/pages/Signin';
 import SignupPage from '../User/pages/Signup';
 import Plateform from '../Plateform';
@@ -58,7 +61,18 @@ class App extends Component {
     const { authUser, isAuthenticated, loaded, loading } = this.props;
     return (
       <Switch>
+        <Route exact path="/" component={HomePage} />
         <Route exact path="/concerts" component={ConcertsPage} />
+        <Route exact path="/musiciens" component={MusiciensListPage} />
+        <PrivateRoute
+          exact
+          path="/concerts/new"
+          component={CreateConcertPage}
+          authUser={authUser}
+          loading={loading}
+          loaded={loaded}
+          isAuthenticated={isAuthenticated}
+        />
         <PublicRoute
           path="/signin"
           component={SigninPage}

@@ -1,0 +1,53 @@
+.MusiciensList {
+  .MusicienItem {
+    position: relative;
+    margin: 15px;
+    padding: 15px;
+    height: 400px;    
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 0px;
+    transition: 0.5s all;
+
+    &:hover {
+      padding: 5px;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 25px 0px;
+    }
+
+    .MusicienItem__image {
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    }
+
+    .MusicienItem__description {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      color: #fff;
+      padding: 50px;
+
+      .MusicienItem__descriptionTitle {
+        font-size: 30px;
+        color: #fff;
+        font-family: 'Baloo Bhaijaan';
+        text-transform: uppercase;
+      }
+
+      .small-title {
+        font-family: 'Baloo Bhaijaan';        
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

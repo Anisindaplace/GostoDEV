@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Row, Col, Table } from 'antd';
+import { Card, Row, Col } from 'antd';
 
 import Breacrumb from '../common/components/Breadcrumb/Breadcrumb';
 import EditableCell from '../common/components/Table/EditableCell';
@@ -15,28 +15,31 @@ class Plateform extends Component {
     const { authUser } = this.props;
     return [{
       key: 'name',
-      info: 'Full Name: ',
+      info: 'Nom utilisateur: ',
       description: authUser.get('displayName'),
       isEditable: true,
     }, {
-      key: 'description',
-      info: 'About Me: ',
-      description: 'Hi, I’m James, I’m 36 and I work as a Digital Designer for the “Daydreams” Agency in Pier 56',
-      isEditable: true,
+      key: 'type',
+      info: 'Type: ',
+      description: authUser.getIn(['musicien', 'type']),
     }, {
-      key: 'birthday',
-      info: 'Birthday: ',
-      description: 'December 14th, 1980',
-      isEditable: true,
+      key: 'scene',
+      info: 'Nom de scène: ',
+      description: authUser.getIn(['musicien', 'sceneName']),
     }, {
-      key: 'email',
-      info: 'Email: ',
-      description: authUser.get('email'),
+      key: 'website',
+      info: 'Site internet: ',
+      description: authUser.getIn(['musicien', 'website']),
+      isEditable: false,
+    }, {
+      key: 'biography',
+      info: 'Biographie: ',
+      description: authUser.getIn(['musicien', 'biography']),
       isEditable: false,
     }, {
       key: 'userType',
-      info: 'User type: ',
-      description: authUser.get('isAdmin') ? "You're admin!" : authUser.get('type'),
+      info: "Type d'utilisateur",
+      description: authUser.get('isAdmin') ? "You're admin!" : authUser.get('musicien') ? 'Musicien' : 'Organisateur de concerts',
       isEditable: false,
     }];
   }
@@ -54,7 +57,7 @@ class Plateform extends Component {
                   <div className="UserImage">
                     <div
                       className="image-upload-container"
-                      style={{ backgroundImage: `url(${authUser.get('profileImageURL')})` }}
+                      style={{ backgroundImage: `url(${authUser.get('image') || authUser.get('profileImageURL')})` }}
                     />
                   </div>
                   <ul className="PersonalInfo">

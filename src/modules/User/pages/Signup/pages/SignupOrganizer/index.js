@@ -22,7 +22,7 @@ class SignupPage extends Component {
     const { create, history } = this.props;
     return (
       <div className="Signin">
-        <h1 className="Section__Title text-center">Créer votre profil de Musicien</h1>
+        <h1 className="Section__Title text-center">Créer votre profil d'organisateur de concert</h1>
         <SignupOrganizerForm createOrganizer={create} history={history} />
       </div>
     );

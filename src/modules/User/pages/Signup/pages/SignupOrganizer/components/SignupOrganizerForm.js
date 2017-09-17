@@ -74,7 +74,15 @@ class SignupOrganizerForm extends Component {
           component={FormInputs.InputForm}
           type="password"
           decorator={getFieldDecorator}
-          validationRules={[{ required: true, message: 'Please input your Password.' }]}
+          validationRules={[{ required: true, message: 'Please input your password.' }]}
+        />
+        <FormInputs.FormItem
+          label="Nom"
+          name="name"
+          placeholder="Nom"
+          component={FormInputs.InputForm}
+          decorator={getFieldDecorator}
+          validationRules={[{ required: true, message: 'Please input your name.' }]}
         />
         <FormInputs.FormItem
           label="Addresse"

@@ -1,74 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Alert, Button, notification, Steps } from 'antd';
-import { reduxForm, Field } from 'redux-form';
-import {
-  SelectField,
-  TextField,
-} from 'redux-form-antd';
+import { Form, Icon, Alert, Button, notification, Steps } from 'antd';
+import classNames from 'classnames';
+import { musicienTypes, styleMusicaux } from '../constants';
 
 import FormInputs from '../../../../../../common/components/Form';
 
-const musicienType = [{
-  value: 'groupe',
-  label: 'Groupe',
-}, {
-  value: 'artiste-solo',
-  label: 'Artiste solo',
-}, {
-  value: 'duo',
-  label: 'Duo',
-}, {
-  value: 'trio',
-  label: 'Trio',
-}, {
-  value: 'quatuor',
-  label: 'Quatuor',
-}, {
-  value: 'chorale',
-  label: 'Chrole',
-}];
-
-const styleMusicaux = [{
-  value: 'rock',
-  label: 'Rock',
-}, {
-  value: 'jazz',
-  label: 'Jazz',
-}, {
-  value: 'world',
-  label: 'World',
-}, {
-  value: 'chanson',
-  label: 'Chanson',
-}, {
-  value: 'electro',
-  label: 'Electro',
-}, {
-  value: 'hip-hop',
-  label: 'Hip-Hop',
-}, {
-  value: 'groove',
-  label: 'Groove',
-}, {
-  value: 'classique',
-  label: 'Classique',
-}];
 
 const steps = [{
   title: 'Login',
   icon: 'user',
 }, {
-  title: 'Vérification',
+  title: 'Profil',
   icon: 'solution',
 }, {
   title: 'Image',
-  icon: 'image',
+  icon: 'cloud-upload-o',
 }];
 
 class SignupMusicienForm extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
+    form: PropTypes.object.isRequired,
     createMusicien: PropTypes.func.isRequired,
   }
 
@@ -111,158 +64,199 @@ class SignupMusicienForm extends Component {
       }
     });
   }
+
+  normalizeFile = (evt) => {
+    if (Array.isArray(evt)) {
+      return evt;
+    }
+    return evt && evt.fileList;
+  }
+
   render() {
     const { current } = this.state;
+    const { getFieldDecorator, getFieldError, isSubmitting } = this.props.form;
+    const error = getFieldError('formValidation');
+
     return (
-      <div className="m-w-400">
+      <div>
         <Steps current={current}>
           {steps.map(item => <Steps.Step key={item.title} title={item.title} icon={<Icon type={item.icon} />} />)}
         </Steps>
-        <div className="steps-content p-t-30">
-          <form>
-            {this.renderStep(current)}
-          </form>
-        </div>
-        <div className="steps-action text-center">
-          {
-            this.state.current < steps.length - 1 &&
-            <Button type="primary" onClick={() => this.next()}>Next</Button>
-          }
-          {
-            this.state.current === steps.length - 1 &&
-            <Button
-              type="primary"
-              htmlType="submit"
-              icon="login"
-            >
-              Commencez l'exploration
-            </Button>
-          }
-          {
-            this.state.current > 0
-            &&
-            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-              Previous
-            </Button>
-          }
+        <div className="steps-content p-t-40">
+          <FormInputs.Form
+            size="large"
+            layout="horizontal"
+            decorator={getFieldDecorator}
+            onSubmit={this.handleSubmit}
+            className="clearfix m-auto"
+            style={{ maxWidth: '600px' }}
+          >
+            <div className={classNames('FormSection', current === 0 && 'visible')}>
+              <FormInputs.FormItem
+                label="Nom d'utilisateur"
+                name="username"
+                placeholder="Nom d'utilisateur"
+                prefix={<Icon type="user" style={{ fontSize: 13 }} />}
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+                validationRules={[{ required: true, message: 'Please input your username.' }]}
+              />
+              <FormInputs.FormItem
+                label="Addresse mail"
+                name="email"
+                placeholder="Addresse mail"
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+                validationRules={[{ required: true, message: 'Please input your email.' }]}
+              />
+              <FormInputs.FormItem
+                label="Mot de passe"
+                name="password"
+                placeholder="Mot de passe"
+                prefix={<Icon type="lock" style={{ fontSize: 13 }} />}
+                component={FormInputs.InputForm}
+                type="password"
+                decorator={getFieldDecorator}
+                validationRules={[{ required: true, message: 'Please input your Password.' }]}
+              />
+            </div>
+            <div className={classNames('FormSection', current === 1 && 'visible')}>
+              <FormInputs.FormItem
+                label="Type"
+                name="type"
+                placeholder="Choissisez votre type"
+                component={FormInputs.SelectForm}
+                options={musicienTypes}
+                decorator={getFieldDecorator}
+                validationRules={[{ required: true, message: 'Please choose your type.' }]}
+              />
+              <FormInputs.FormItem
+                label="Nom de scène"
+                name="sceneName"
+                placeholder="Nom de scène"
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+                validationRules={[{ required: true, message: 'Please input your scene name.' }]}
+              />
+              <FormInputs.FormItem
+                label="Site internet"
+                name="website"
+                placeholder="http://www.example.com/"
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+                validationRules={[{ required: true, message: 'Please input your website.' }]}
+              />
+              <FormInputs.FormItem
+                label="Présentation/Biographie"
+                name="biography"
+                placeholder="Parlez-nous un peu de vous..."
+                type="textarea"
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+              />
+              <FormInputs.FormItem
+                label="Style musicaux"
+                name="musicalStyles"
+                mode="tags"
+                placeholder="Choissisez vos styles musicaux"
+                helpText="Vous pouvez choisir un ou plusieurs style musicaux"
+                component={FormInputs.SelectForm}
+                options={styleMusicaux}
+                decorator={getFieldDecorator}
+              />
+              <FormInputs.FormItem
+                label="Répertoire"
+                name="repository"
+                helpText="Reprises ou chansons originales"
+                component={FormInputs.SwitchForm}
+                decorator={getFieldDecorator}
+              />
+              <FormInputs.FormItem
+                label="Influence"
+                name="inspirations"
+                type="textarea"
+                placeholder="Quels artistes t’inspirent ?"
+                helpText="Quels artistes t’inspirent ? Des exemples de titres que tu reprends ?"
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+              />
+              <FormInputs.FormItem
+                label="Members"
+                name="members"
+                placeholder="Avec qui vous travaillez ..."
+                type="textarea"
+                helpText="Ce champ n'est pas obligatoire si vous êtes un artiste solo"
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+              />
+              <FormInputs.FormItem
+                label="Instruments"
+                name="instruments"
+                mode="tags"
+                placeholder="Choissisez vos instruments"
+                helpText="Vous pouvez choisir un ou plusieurs instrument"
+                component={FormInputs.SelectForm}
+                options={styleMusicaux}
+                decorator={getFieldDecorator}
+              />
+              <FormInputs.FormItem
+                label="Sons"
+                name="songs"
+                placeholder="Montrez-nous ce que vous savez faire ..."
+                type="textarea"
+                helpText="Veuillez mettre chaque son dans une ligne"
+                component={FormInputs.InputForm}
+                decorator={getFieldDecorator}
+              />
+            </div>
+            <div className={classNames('FormSection', current === 2 && 'visible', 'FormSection--Image')}>
+              <FormInputs.FormItem
+                label="User Image"
+                name="images"
+                valuePropName="fileList"
+                getValueFromEvent={this.normalizeFile}
+                component={FormInputs.FileForm}
+                decorator={getFieldDecorator}
+              />
+            </div>
+            {error &&
+              <Alert
+                message="Error"
+                description={error.join(',')}
+                type="error"
+                showIcon
+                className="m-b-15"
+              />
+            }
+            <div className="steps-action text-center p-t-40">
+              {
+                this.state.current < steps.length - 1 &&
+                <Button type="primary" onClick={() => this.next()}>Passer à l'étape suivante</Button>
+              }
+              {
+                this.state.current === steps.length - 1 &&
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={isSubmitting()}
+                  icon="login"
+                >
+                  Commencez l'exploration
+                </Button>
+              }
+              {
+                this.state.current > 0
+                &&
+                <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+                  Revenir vers l'avant
+                </Button>
+              }
+            </div>
+          </FormInputs.Form>
         </div>
       </div>
     );
   }
-
-  renderStep(stepIndex) {
-    switch (stepIndex) {
-      case 0: return (
-        <div>
-          <Field
-            label="Nom d'utilisateur"
-            name="username"
-            placeholder="Nom d'utilisateur"
-            prefix={<Icon type="user" style={{ fontSize: 13 }} />}
-            component={TextField}
-            hintText="Street"
-            validationRules={[{ required: true, message: 'Please input your username.' }]}
-          />
-          <Field
-            label="Addresse mail"
-            name="email"
-            placeholder="Addresse mail"
-            component={TextField}
-            validationRules={[{ required: true, message: 'Please input your email.' }]}
-          />
-          <Field
-            label="Mot de passe"
-            name="password"
-            placeholder="Mot de passe"
-            prefix={<Icon type="lock" style={{ fontSize: 13 }} />}
-            component={TextField}
-            type="password"
-            validationRules={[{ required: true, message: 'Please input your Password.' }]}
-          />
-        </div>
-      );
-
-      case 1: return (
-        <div>
-          <Field
-            label="Type"
-            name="type"
-            placeholder="Choissisez votre type"
-            component={SelectField}
-            options={musicienType}
-            validationRules={[{ required: true, message: 'Please choose your type.' }]}
-          />
-          <Field
-            label="Nom de scène"
-            name="sceneName"
-            placeholder="Nom de scène"
-            component={TextField}
-            validationRules={[{ required: true, message: 'Please input your scene name.' }]}
-          />
-          <Field
-            label="Site internet"
-            name="website"
-            placeholder="http://www.example.com/"
-            component={TextField}
-            validationRules={[{ required: true, message: 'Please input your website.' }]}
-          />
-          <Field
-            label="Présentation/Biographie"
-            name="biography"
-            placeholder="Parlez-nous un peu de vous..."
-            type="textarea"
-            component={TextField}
-          />
-          <Field
-            label="Style musicaux"
-            name="musicalStyles"
-            mode="tags"
-            placeholder="Choissisez vos styles musicaux"
-            helpText="Vous pouvez choisir un ou plusieurs style musicaux"
-            component={SelectField}
-            options={styleMusicaux}
-          />
-          <Field
-            label="Influence / Répertoire"
-            name="repositories"
-            mode="tags"
-            placeholder="Choissisez vos répertoires"
-            helpText="Vous pouvez choisir un ou plusieurs répertoire"
-            component={SelectField}
-            options={styleMusicaux}
-          />
-          <Field
-            label="Members"
-            name="members"
-            placeholder="Avec qui vous travailler ..."
-            type="textarea"
-            helpText="Ce champ n'est pas obligatoire si vous êtes un artiste solo"
-            component={TextField}
-          />
-          <Field
-            label="Instruments"
-            name="instruments"
-            mode="tags"
-            placeholder="Choissisez vos instruments"
-            helpText="Vous pouvez choisir un ou plusieurs instrument"
-            component={SelectField}
-            options={styleMusicaux}
-          />
-          <Field
-            label="Sons"
-            name="songs"
-            placeholder="Montrez-nous ce que vous savez faire ..."
-            type="textarea"
-            helpText="Veuillez mettre chaque son dans une ligne"
-            component={TextField}
-          />
-        </div>
-      );
-    }
-  }
 }
 
-export default reduxForm({
-  // a unique name for the form
-  form: 'SignupMusicienForm',
-})(SignupMusicienForm);
+export default Form.create()(SignupMusicienForm);
