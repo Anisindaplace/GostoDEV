@@ -1,38 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'antd';
-import moment from 'moment';
+import { Row } from 'antd';
 
 import Breacrumb from '../../../common/components/Breadcrumb/Breadcrumb';
-import ConcertItem from '../../components/ConcertItem';
+import ConcertsList from '../../components/ConcertsList';
 
 import FetchConcerts from '../../hocs/FetchConcerts';
 
 @FetchConcerts
-class ConcertsPages extends Component {
+class ConcertsListPage extends Component {
   static propTypes = {
     concerts: PropTypes.array,
+    authUser: PropTypes.object,
+    isAuthenticated: PropTypes.bool.isRequired,
+    sendInterest: PropTypes.func.isRequired,
   };
 
   render() {
-    const { concerts } = this.props;
+    const { concerts, isAuthenticated, authUser, sendInterest } = this.props;
     return (
       <div>
         <Breacrumb pageTitle="Concerts" />
         <div className="section before-after">
           <div className="container clearfix">
             <Row gutter={16}>
-              {concerts.map(concert => (
-                <Col className="gutter-row" md={8}>
-                  <ConcertItem
-                    title={concert.shortTitle}
-                    subtitle={concert.shortTitle}
-                    description={concert.description}
-                    concertDate={moment(concert.concertDate).format('L')}
-                    imageSrc={concert.images[0]}
-                  />
-                </Col>
-              ))}
+              <ConcertsList
+                concerts={concerts}
+                isMusicien={isAuthenticated && authUser.get('musicien')}
+                authUser={authUser}
+                sendInterest={sendInterest}
+              />
             </Row>
           </div>
         </div>
@@ -41,4 +38,4 @@ class ConcertsPages extends Component {
   }
 }
 
-export default ConcertsPages;
+export default ConcertsListPage;

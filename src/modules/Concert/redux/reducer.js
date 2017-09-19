@@ -106,6 +106,7 @@ const ConcertRecord = Record({
   remarks: null,
   organizerId: null,
   Organizer: Map(),
+  isInterested: false,
   interestedBy: List(),
   _metadata: Map({
     fetching: false,
@@ -120,6 +121,8 @@ const concertState = new ConcertRecord();
 
 function concertReducer(state = concertState, action) {
   switch (action.type) {
+    case CONCERT_INTEREST_REQUEST_ENDED:
+      return state.set('isInterested', true);
     default: return state;
   }
 }
@@ -163,6 +166,11 @@ export default function concertsReducer(state = initialState, action) {
           const existingConcert = state.getIn(['entities', concert.get('concertId')]);
           return existingConcert ? existingConcert.merge(concert) : new ConcertRecord(concert);
         }));
+
+    case CONCERT_INTEREST_REQUEST_ENDED:
+      if (!action.payload.success) return state;
+      return state
+        .setIn(['entities', action.payload.data.concertId], concertReducer(state.getIn(['entities', action.payload.data.concertId]), action));
 
     default:
       return state;

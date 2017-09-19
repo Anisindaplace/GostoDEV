@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Popover, Button, Icon, Tag } from 'antd';
 import map from 'lodash/map';
@@ -6,40 +6,53 @@ import truncate from 'lodash/truncate';
 import pluralize from 'pluralize';
 import './ConcertItem.scss';
 
-const ConcertPopoverContent = (props) => {
-  return (
-    <div className="ConcertPopoverContent">
-      <div className="ConcertPopoverContent__title">{props.title}</div>
-      <div className="ConcertPopoverContent__duration">
-        <span className="m-r-10"><Icon type="calendar" /> {props.concertDate} {props.time}</span>
-        <span><Icon type="clock-circle-o" /> {pluralize('heure', props.duration, true)}</span>
-      </div>
-      <div className="ConcertPopoverContent__description">{props.description}</div>
-      <div className="ConcertPopoverContent__extra">
-        <div className="p-b-10">
-          <div className="ConcertPopoverContent__extraItem">Styles musicaux recherchés: </div>
-          {map(props.musicalStyles, style => <Tag key={style}>{style}</Tag>)}
-        </div>
-        <div className="p-b-10">
-          <div className="ConcertPopoverContent__extraItem">Catégorie d’artistes: </div>
-          {map(props.artisteCategories, category => <Tag key={category}>{category}</Tag>)}
-        </div>
-      </div>
-      {props.isMusicien &&
-        <div className="ConcertPopoverContent__action">
-          <Button
-            type={props.isInterestedIn ? 'secondary' : 'primary'}
-            icon="heart"
-            className="btn-block"
-            onClick={!!props.isInterestedIn && props.sendInterest}
-          >
-            {props.isInterestedIn ? 'INVITATION WAS SENT' : 'SEND INVITATION'}
-          </Button>
-        </div>
+class ConcertPopoverContent extends Component {
+  send = () => {
+    const { title, sendInterest } = this.props;
+    sendInterest().then(({ payload }) => {
+      if (payload.success) {
+        window.location.href = `mailto:hello@gosto.co?subject=Je suis interessé(e) par ce concert "${title}"`;
       }
-    </div>
-  );
-};
+    });
+  }
+
+  render() {
+    const isChecked = this.props.isInterestedIn || this.props.isInterested;
+    return (
+      <div className="ConcertPopoverContent">
+        <div className="ConcertPopoverContent__title">{this.props.title}</div>
+        <div className="ConcertPopoverContent__duration">
+          <span className="m-r-10"><Icon type="calendar" /> {this.props.concertDate} {this.props.time}</span>
+          <span><Icon type="clock-circle-o" /> {pluralize('heure', this.props.duration, true)}</span>
+        </div>
+        <div className="ConcertPopoverContent__description">{this.props.description}</div>
+        <div className="ConcertPopoverContent__extra">
+          <div className="p-b-10">
+            <div className="ConcertPopoverContent__extraItem">Styles musicaux recherchés: </div>
+            {map(this.props.musicalStyles, style => <Tag key={style}>{style}</Tag>)}
+          </div>
+          <div className="p-b-10">
+            <div className="ConcertPopoverContent__extraItem">Catégorie d’artistes: </div>
+            {map(this.props.artisteCategories, category => <Tag key={category}>{category}</Tag>)}
+          </div>
+        </div>
+        {this.props.isMusicien &&
+          <div className="ConcertPopoverContent__action">
+            <Button
+              type={isChecked ? 'secondary' : 'primary'}
+              icon={isChecked ? 'check' : 'heart'}
+              className="btn-block"
+              onClick={!isChecked && this.send}
+              disabled={isChecked}
+            >
+              {isChecked ? 'INVITATION WAS SENT' : 'SEND INVITATION'}
+            </Button>
+          </div>
+        }
+      </div>
+    );
+  }
+}
 
 ConcertPopoverContent.propTypes = {
   title: PropTypes.string.isRequired,
@@ -51,6 +64,7 @@ ConcertPopoverContent.propTypes = {
   artisteCategories: PropTypes.array.isRequired,
   isMusicien: PropTypes.bool,
   isInterestedIn: PropTypes.bool,
+  isInterested: PropTypes.bool,
   sendInterest: PropTypes.func.isRequired,
 };
 

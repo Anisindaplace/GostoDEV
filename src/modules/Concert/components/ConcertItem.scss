@@ -33,6 +33,12 @@ $txt-color:   #DCE3E7;
     color: #ed145b;
     text-transform: uppercase;
   }
+
+  .ConcertPopoverContent__action .ant-btn-secondary {
+    background-color: #56A3A6 !important;
+    border-color: #62B6CB !important;
+    color: #fff !important;
+  }
 }
 
 .Card {

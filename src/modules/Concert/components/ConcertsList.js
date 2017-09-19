@@ -11,6 +11,7 @@ export default class ConcertList extends Component {
     size: PropTypes.number,
     isMusicien: PropTypes.bool,
     sendInterest: PropTypes.func.isRequired,
+    authUser: PropTypes.object,
   }
 
   constructor(props) {
@@ -30,10 +31,14 @@ export default class ConcertList extends Component {
   }
 
   renderConcert(concert) {
-    const { sendInterest, isMusicien } = this.props;
+    const { sendInterest, isMusicien, authUser } = this.props;
+    const musicien = authUser && authUser.get('musicien');
+    const isInterestedIn = !musicien ? false : musicien.get('interestedIn').find(interest => interest.get('concertId') === concert.concertId);
     return (
       <Col className="gutter-row" md={8} key={concert.concertId}>
         <ConcertItem
+          isInterestedIn={isInterestedIn}
+          isInterested={concert.isInterested}
           title={concert.shortTitle}
           subTitle={concert.shortTitle}
           description={concert.description}

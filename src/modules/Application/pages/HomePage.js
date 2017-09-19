@@ -35,6 +35,7 @@ export default class HomePage extends Component {
               <ConcertsList
                 concerts={concerts}
                 isMusicien={isAuthenticated && authUser.get('musicien')}
+                authUser={authUser}
                 sendInterest={sendInterest}
                 size={4}
               />

@@ -125,9 +125,14 @@ class Plateform extends Component {
                       <Col span={12}>
                         <ConcertItem
                           title={concert.get('shortTitle')}
+                          subTitle={concert.get('shortTitle')}
                           description={concert.get('description')}
                           imageSrc={concert.getIn(['images', '0'])}
                           concertDate={moment(concert.get('concertDate')).format('L')}
+                          time={moment(concert.get('time')).format('LT')}
+                          duration={concert.get('duration')}
+                          musicalStyles={concert.get('musicalStyles').toJS()}
+                          artisteCategories={concert.get('artisteCategories').toJS()}
                         />
                       </Col>
                     ))}
