@@ -256,7 +256,7 @@ class SignupMusicienForm extends Component {
                 this.state.current > 0
                 &&
                 <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                  Revenir vers l'avant
+                  Revenir en arrière
                 </Button>
               }
             </div>
