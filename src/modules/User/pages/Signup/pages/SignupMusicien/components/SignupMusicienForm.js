@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Icon, Alert, Button, notification, Steps } from 'antd';
 import classNames from 'classnames';
 
-import { musicienTypes, styleMusicaux } from '../constants';
+import { musicienTypes, styleMusicaux, instruments } from '../constants';
 import FormInputs from '../../../../../../common/components/Form';
 
 const steps = [{
@@ -204,7 +204,7 @@ class SignupMusicienForm extends Component {
                 placeholder="Choissisez vos instruments"
                 helpText="Vous pouvez choisir un ou plusieurs instrument"
                 component={FormInputs.SelectForm}
-                options={styleMusicaux}
+                options={instruments}
                 decorator={getFieldDecorator}
               />
               <FormInputs.FormItem
