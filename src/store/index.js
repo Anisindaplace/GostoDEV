@@ -8,9 +8,7 @@ import apiTokenInjector from '../middlewares/apiMiddleware';
 import rootReducer from './reducers';
 
 export const history = createHistory({
-  basename: process.env.NODE_ENV === 'production'
-    ? `${window.location.pathname.split('/').slice(0, 3).join('/')}`
-    : '/',
+  basename: '/',
 });
 
 export default function configureStore(initialState) {
